@@ -1,0 +1,86 @@
+﻿<Page
+    x:Class="WeatherApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WeatherApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" DataContext="{Binding Main, Source={StaticResource Locator}}" >
+
+    <Page.Resources>
+        <local:StringFormatter x:Key="TempStringFormatter" StringFormat="{}{0:0}°"/>
+        <local:StringFormatConverter x:Key="StringFormatConverter" />
+    </Page.Resources>
+
+    <Grid VerticalAlignment="Top" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Center" Orientation="Horizontal">
+            
+            <TextBox x:Name="tbCityName" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding City, Mode=TwoWay}" VerticalAlignment="Center" Width="140" Margin="20,0" />
+            <Button x:Name="bsStartSearch" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Command='{Binding SearchAndUpdateCommand}' Margin="20,0"/>
+        </StackPanel>
+        <TextBlock Grid.Row="1" x:Name="tbCity" TextWrapping="Wrap" Text="{Binding Root.city.CityCountry, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="48" />
+        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+            <ListBox ItemsSource="{Binding WeatherList}" SelectedItem="{Binding SelectedDay, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.Resources>
+                    <DataTemplate x:Key="WeatherDayTemplate">
+                        <Grid Margin="1" Width="100">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="AUTO"/>
+                                <RowDefinition Height="AUTO"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="2" Text="{Binding DateFormated, Mode=OneWay}" FontWeight="Bold" HorizontalAlignment="Center" FontSize="24"></TextBlock>
+                            <Image Grid.Row="1" Stretch="Uniform" Width="80" Source="{Binding ImgPath, Mode=OneWay}"></Image>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="AUTO"/>
+                                    <ColumnDefinition Width="AUTO"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Margin="2" Text="{Binding temp.max, Converter={StaticResource TempStringFormatter}}" FontWeight="Bold" HorizontalAlignment="Center" FontSize="30"></TextBlock>
+                                <TextBlock Grid.Column="1" Margin="2" Text="{Binding temp.min, Converter={StaticResource TempStringFormatter}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"></TextBlock>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                    <ItemsPanelTemplate x:Key="WeatherDayItemsPanelTemplate">
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.Resources>
+                <ListBox.ItemsPanel>
+                    <StaticResource ResourceKey="WeatherDayItemsPanelTemplate"/>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <StaticResource ResourceKey="WeatherDayTemplate"/>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+        <Grid Grid.Row="3" DataContext="{Binding SelectedDay}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="AUTO"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="AUTO"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Margin="10"  Text="{Binding temp.min, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. Min {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Margin="10"  Text="{Binding temp.max, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. Max {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Margin="10"  Text="{Binding temp.morn, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. rano {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Margin="10"  Text="{Binding temp.eve, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. wieczór {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Margin="10"  Text="{Binding temp.night, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. noc {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <TextBlock Grid.Column="1" Margin="10"  Text="{Binding temp.day, Converter={StaticResource TempStringFormatter}}" FontSize="200" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <StackPanel Grid.Column="2">
+                <TextBlock Margin="10"  Text="{Binding weather[0].description, ConverterParameter='sss'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Margin="10"  Text="{Binding pressure, Converter={StaticResource StringFormatConverter}, ConverterParameter='Ciśnienie {0} h/pa'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Margin="10"  Text="{Binding humidity, Converter={StaticResource StringFormatConverter}, ConverterParameter='Wilgotność {0}%'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Margin="10"  Text="{Binding speed, Converter={StaticResource StringFormatConverter}, ConverterParameter='Wiatr {0} m/sec'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+
+
+        </Grid>
+    </Grid>
+</Page>

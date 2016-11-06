@@ -1,0 +1,1 @@
+Simple UWP application for displaying weather from openweathermap.org
