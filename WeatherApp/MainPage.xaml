@@ -11,8 +11,50 @@
         <local:StringFormatter x:Key="TempStringFormatter" StringFormat="{}{0:0}°"/>
         <local:StringFormatConverter x:Key="StringFormatConverter" />
     </Page.Resources>
+  
+        <Grid VerticalAlignment="Top" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid VerticalAlignment="Top" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DetailGrid.(Grid.Row)" Value="0" />
+                        <Setter Target="DetailGrid.(Grid.Column)" Value="1" />
+                        <Setter Target="ColumnOne.Width" Value="Auto" />
+                        <Setter Target="ColumnTwo.Width" Value="*" />
+
+                        <Setter Target="WeatherCondition.(Grid.Row)" Value="0" />
+                        <Setter Target="WeatherCondition.(Grid.Column)" Value="2" />
+                        <Setter Target="ColumnOne.Width" Value="Auto" />
+                        <Setter Target="ColumnThree.Width" Value="Auto" />
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DetailGrid.(Grid.Row)" Value="1" />
+                        <Setter Target="DetailGrid.(Grid.Column)" Value="0" />
+                        <Setter Target="ColumnOne.Width" Value="*" />
+                        <Setter Target="ColumnTwo.Width" Value="Auto" />
+
+                        <Setter Target="WeatherCondition.(Grid.Row)" Value="2" />
+                        <Setter Target="WeatherCondition.(Grid.Column)" Value="0" />
+                        <Setter Target="ColumnOne.Width" Value="*" />
+                        <Setter Target="ColumnThree.Width" Value="Auto" />
+
+
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="50" />
@@ -22,7 +64,7 @@
         <StackPanel Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Center" Orientation="Horizontal">
             
             <TextBox x:Name="tbCityName" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding City, Mode=TwoWay}" VerticalAlignment="Center" Width="140" Margin="20,0" />
-            <Button x:Name="bsStartSearch" Content="Szukaj" HorizontalAlignment="Left" VerticalAlignment="Center" Command='{Binding SearchAndUpdateCommand}' Margin="20,0"/>
+            <Button x:Name="bsStartSearch" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Command='{Binding SearchAndUpdateCommand}' Margin="20,0"/>
         </StackPanel>
         <TextBlock Grid.Row="1" x:Name="tbCity" TextWrapping="Wrap" Text="{Binding Root.city.CityCountry, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="48" />
         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
@@ -59,28 +101,36 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </ScrollViewer>
-        <Grid Grid.Row="3" DataContext="{Binding SelectedDay}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="AUTO"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="AUTO"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel>
-                <TextBlock Margin="10"  Text="{Binding temp.min, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. Min {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Margin="10"  Text="{Binding temp.max, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. Max {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Margin="10"  Text="{Binding temp.morn, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. rano {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Margin="10"  Text="{Binding temp.eve, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. wieczór {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Margin="10"  Text="{Binding temp.night, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. noc {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-            </StackPanel>
-            <TextBlock Grid.Column="1" Margin="10"  Text="{Binding temp.day, Converter={StaticResource TempStringFormatter}}" FontSize="200" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-            <StackPanel Grid.Column="2">
-                <TextBlock Margin="10"  Text="{Binding weather[0].description}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Margin="10"  Text="{Binding pressure, Converter={StaticResource StringFormatConverter}, ConverterParameter='Ciśnienie {0} h/pa'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Margin="10"  Text="{Binding humidity, Converter={StaticResource StringFormatConverter}, ConverterParameter='Wilgotność {0}%'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Margin="10"  Text="{Binding speed, Converter={StaticResource StringFormatConverter}, ConverterParameter='Wiatr {0} m/sec'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-            </StackPanel>
+        <ScrollViewer Grid.Row="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+            <Grid Grid.Row="3" DataContext="{Binding SelectedDay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="ColumnOne" Width="Auto"/>
+                    <ColumnDefinition x:Name="ColumnTwo" Width="*"/>
+                    <ColumnDefinition x:Name="ColumnThree" Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="Auto"></RowDefinition>
+                    <RowDefinition  Height="Auto"></RowDefinition>
+                    <RowDefinition  Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0" Grid.Row="0">
+                    <TextBlock Margin="10"  Text="{Binding temp.min, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. Min {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Margin="10"  Text="{Binding temp.max, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. Max {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Margin="10"  Text="{Binding temp.morn, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. rano {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Margin="10"  Text="{Binding temp.eve, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. wieczór {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Margin="10"  Text="{Binding temp.night, Converter={StaticResource StringFormatConverter}, ConverterParameter='Temp. noc {0}°'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <TextBlock Name="DetailGrid" Grid.Column="1" Grid.Row="0" Margin="10"  Text="{Binding temp.day, Converter={StaticResource TempStringFormatter}}" FontSize="200" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <StackPanel Name="WeatherCondition" Grid.Column="2" Grid.Row="0">
+                    <TextBlock Margin="10"  Text="{Binding weather[0].description}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Margin="10"  Text="{Binding pressure, Converter={StaticResource StringFormatConverter}, ConverterParameter='Ciśnienie {0} h/pa'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Margin="10"  Text="{Binding humidity, Converter={StaticResource StringFormatConverter}, ConverterParameter='Wilgotność {0}%'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Margin="10"  Text="{Binding speed, Converter={StaticResource StringFormatConverter}, ConverterParameter='Wiatr {0} m/sec'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
 
 
-        </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
+
 </Page>
