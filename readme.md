@@ -1,1 +1,1 @@
-Simple UWP application for displaying weather from openweathermap.org
+Prosta aplikacja pogodowa UWP korzystająca z api openweathermap.org
