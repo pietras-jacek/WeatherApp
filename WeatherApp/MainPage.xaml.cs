@@ -32,11 +32,11 @@ namespace WeatherApp
             ApplicationView.PreferredLaunchViewSize = new Size(770, 550);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
-            IToastImageAndText02 trying_toast = ToastContentFactory.CreateToastImageAndText02();
-            trying_toast.TextHeading.Text = "Aplikacja pogodowa załadowana poprawnie";
-            trying_toast.TextBodyWrap.Text = "WeatherApp";
+            IToastImageAndText02 weather_notifications = ToastContentFactory.CreateToastImageAndText02();
+            weather_notifications.TextHeading.Text = "Aplikacja pogodowa załadowana poprawnie";
+            weather_notifications.TextBodyWrap.Text = "WeatherApp";
             ScheduledToastNotification giveittime;
-            giveittime = new ScheduledToastNotification(trying_toast.GetXml(), DateTime.Now.AddSeconds(2));
+            giveittime = new ScheduledToastNotification(weather_notifications.GetXml(), DateTime.Now.AddSeconds(2));
             giveittime.Id = "Any_ID";
             ToastNotificationManager.CreateToastNotifier().AddToSchedule(giveittime);
 
