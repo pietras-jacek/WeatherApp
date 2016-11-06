@@ -15,8 +15,8 @@ using Windows.UI.Xaml.Navigation;
 
 using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
-
-
+using NotificationsExtensions.ToastContent;
+using Windows.UI.Notifications;
 
 namespace WeatherApp
 {
@@ -31,6 +31,15 @@ namespace WeatherApp
             
             ApplicationView.PreferredLaunchViewSize = new Size(770, 550);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+
+            IToastImageAndText02 trying_toast = ToastContentFactory.CreateToastImageAndText02();
+            trying_toast.TextHeading.Text = "Aplikacja pogodowa załadowana poprawnie";
+            trying_toast.TextBodyWrap.Text = "WeatherApp";
+            ScheduledToastNotification giveittime;
+            giveittime = new ScheduledToastNotification(trying_toast.GetXml(), DateTime.Now.AddSeconds(2));
+            giveittime.Id = "Any_ID";
+            ToastNotificationManager.CreateToastNotifier().AddToSchedule(giveittime);
+
         }
     }
 
