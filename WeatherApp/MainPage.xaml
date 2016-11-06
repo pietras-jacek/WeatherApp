@@ -22,7 +22,7 @@
         <StackPanel Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Center" Orientation="Horizontal">
             
             <TextBox x:Name="tbCityName" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding City, Mode=TwoWay}" VerticalAlignment="Center" Width="140" Margin="20,0" />
-            <Button x:Name="bsStartSearch" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Command='{Binding SearchAndUpdateCommand}' Margin="20,0"/>
+            <Button x:Name="bsStartSearch" Content="Szukaj" HorizontalAlignment="Left" VerticalAlignment="Center" Command='{Binding SearchAndUpdateCommand}' Margin="20,0"/>
         </StackPanel>
         <TextBlock Grid.Row="1" x:Name="tbCity" TextWrapping="Wrap" Text="{Binding Root.city.CityCountry, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="48" />
         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
@@ -74,7 +74,7 @@
             </StackPanel>
             <TextBlock Grid.Column="1" Margin="10"  Text="{Binding temp.day, Converter={StaticResource TempStringFormatter}}" FontSize="200" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
             <StackPanel Grid.Column="2">
-                <TextBlock Margin="10"  Text="{Binding weather[0].description, ConverterParameter='sss'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Margin="10"  Text="{Binding weather[0].description}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Margin="10"  Text="{Binding pressure, Converter={StaticResource StringFormatConverter}, ConverterParameter='Ciśnienie {0} h/pa'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Margin="10"  Text="{Binding humidity, Converter={StaticResource StringFormatConverter}, ConverterParameter='Wilgotność {0}%'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Margin="10"  Text="{Binding speed, Converter={StaticResource StringFormatConverter}, ConverterParameter='Wiatr {0} m/sec'}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
