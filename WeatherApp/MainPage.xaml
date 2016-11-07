@@ -29,8 +29,7 @@
 
                         <Setter Target="WeatherCondition.(Grid.Row)" Value="0" />
                         <Setter Target="WeatherCondition.(Grid.Column)" Value="2" />
-                        <Setter Target="ColumnOne.Width" Value="Auto" />
-                        <Setter Target="ColumnThree.Width" Value="Auto" />
+
 
                     </VisualState.Setters>
                 </VisualState>
@@ -46,8 +45,6 @@
 
                         <Setter Target="WeatherCondition.(Grid.Row)" Value="2" />
                         <Setter Target="WeatherCondition.(Grid.Column)" Value="0" />
-                        <Setter Target="ColumnOne.Width" Value="*" />
-                        <Setter Target="ColumnThree.Width" Value="Auto" />
 
 
                     </VisualState.Setters>
