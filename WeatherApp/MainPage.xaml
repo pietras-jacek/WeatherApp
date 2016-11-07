@@ -64,7 +64,7 @@
         <StackPanel Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Center" Orientation="Horizontal">
             
             <TextBox x:Name="tbCityName" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding City, Mode=TwoWay}" VerticalAlignment="Center" Width="140" Margin="20,0" />
-            <Button x:Name="bsStartSearch" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Command='{Binding SearchAndUpdateCommand}' Margin="20,0"/>
+            <Button x:Name="bsStartSearch" Content="Wyszukaj" HorizontalAlignment="Left" VerticalAlignment="Center" Command='{Binding SearchAndUpdateCommand}' Margin="20,0"/>
         </StackPanel>
         <TextBlock Grid.Row="1" x:Name="tbCity" TextWrapping="Wrap" Text="{Binding Root.city.CityCountry, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="48" />
         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
